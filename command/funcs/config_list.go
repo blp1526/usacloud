@@ -17,7 +17,7 @@ func ConfigList(ctx command.Context, params *params.ListConfigParam) error {
 	if !params.Brief {
 		cp, err = profile.GetCurrentName()
 		if err != nil {
-			return err
+			cp = ""
 		}
 	}
 
