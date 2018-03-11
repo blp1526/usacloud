@@ -10,7 +10,7 @@ func ConfigResource() *schema.Resource {
 		"list": {
 			Type:             schema.CommandCustom,
 			Aliases:          []string{"ls"},
-			Params:           emptyParam(),
+			Params:           configListParam(),
 			UseCustomCommand: true,
 			NeedlessConfirm:  true,
 			NoOutput:         true,
@@ -75,6 +75,18 @@ func ConfigResource() *schema.Resource {
 
 var AllowZones = []string{"is1a", "is1b", "tk1a", "tk1v"}
 var AllowOutputTypes = []string{"table", "json", "csv", "tsv"}
+
+func configListParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"brief": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Description: "Without any decoration",
+			Category:    "config",
+			Order:       10,
+		},
+	}
+}
 
 func configEditParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{

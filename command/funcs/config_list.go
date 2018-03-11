@@ -13,17 +13,24 @@ func ConfigList(ctx command.Context, params *params.ListConfigParam) error {
 		return err
 	}
 
-	cp, err := profile.GetCurrentName()
-	if err != nil {
-		return err
+	var cp string
+	if !params.Brief {
+		cp, err = profile.GetCurrentName()
+		if err != nil {
+			return err
+		}
 	}
 
 	for _, p := range profiles {
+		if params.Brief {
+			fmt.Fprintf(command.GlobalOption.Out, "%s\n", p)
+			continue
+		}
+
 		mark := " "
 		if p == cp {
 			mark = "*"
 		}
-
 		fmt.Fprintf(command.GlobalOption.Out, "%s %s\n", mark, p)
 	}
 	return nil

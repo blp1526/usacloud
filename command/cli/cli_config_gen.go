@@ -655,6 +655,10 @@ func init() {
 				Aliases: []string{"ls"},
 				Usage:   "List Config",
 				Flags: []cli.Flag{
+					&cli.BoolFlag{
+						Name:  "brief",
+						Usage: "Without any decoration",
+					},
 					&cli.StringFlag{
 						Name:  "param-template",
 						Usage: "Set input parameter from string(JSON)",
@@ -696,6 +700,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, listParam)
 
 					// Set option values
+					if c.IsSet("brief") {
+						listParam.Brief = c.Bool("brief")
+					}
 					if c.IsSet("param-template") {
 						listParam.ParamTemplate = c.String("param-template")
 					}
@@ -783,6 +790,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("brief") {
+						listParam.Brief = c.Bool("brief")
+					}
 					if c.IsSet("param-template") {
 						listParam.ParamTemplate = c.String("param-template")
 					}
@@ -1463,6 +1473,11 @@ func init() {
 		Order:       1,
 	})
 	AppendFlagCategoryMap("config", "edit", "zone", &schema.Category{
+		Key:         "config",
+		DisplayName: "Config options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("config", "list", "brief", &schema.Category{
 		Key:         "config",
 		DisplayName: "Config options",
 		Order:       1,

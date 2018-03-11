@@ -76,6 +76,11 @@ func ConfigListCompleteFlags(ctx command.Context, params *params.ListConfigParam
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "brief":
+		param := define.Resources["Config"].Commands["list"].BuildedParams().Get("brief")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {

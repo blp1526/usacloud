@@ -316,6 +316,7 @@ func (p *EditConfigParam) GetGenerateSkeleton() bool {
 
 // ListConfigParam is input parameters for the sacloud API
 type ListConfigParam struct {
+	Brief             bool   `json:"brief"`
 	ParamTemplate     string `json:"param-template"`
 	ParamTemplateFile string `json:"param-template-file"`
 	GenerateSkeleton  bool   `json:"generate-skeleton"`
@@ -328,6 +329,9 @@ func NewListConfigParam() *ListConfigParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *ListConfigParam) FillValueToSkeleton() {
+	if isEmpty(p.Brief) {
+		p.Brief = false
+	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
@@ -371,6 +375,13 @@ func (p *ListConfigParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
+func (p *ListConfigParam) SetBrief(v bool) {
+	p.Brief = v
+}
+
+func (p *ListConfigParam) GetBrief() bool {
+	return p.Brief
+}
 func (p *ListConfigParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
